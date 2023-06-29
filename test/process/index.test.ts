@@ -36,6 +36,14 @@ describe('ts add js extension', () => {
         });
         expect(result.type).toBe('done');
     });
+    it('should be able to append .js/.mjs extension for Type Definition only file', async () => {
+        const result = await tsAddJsExtension({
+            config: {
+                dir: 'test/output/dts',
+            },
+        });
+        expect(result.type).toBe('done');
+    });
     it.each(
         Array.from({ length: 6 }, (_, index) =>
             [`js/${index + 1}.js`, `js/${index + 1}.mjs`].filter((file) =>
@@ -44,6 +52,7 @@ describe('ts add js extension', () => {
         )
             .concat(['js/index.js'])
             .concat(['ts/dist/index.d.ts'])
+            .concat(['dts/dist/index.d.ts'])
             .flat()
     )(
         'should read the code and ensure each import/export statemnt is properly formed for "%s"',
